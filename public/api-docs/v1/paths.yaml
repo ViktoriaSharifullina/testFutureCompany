@@ -1,0 +1,117 @@
+Notebooks:
+  get:
+    x-lg-handler: 'App\Http\Controllers\NotebookController@index'
+    tags:
+      - notebooks
+    summary: Get all existing notebooks
+    operationId: getNotebooks
+    responses:
+      '200':
+        description: Successful operation
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                $ref: './notebooks.yaml#/NotebookResponse'
+  post:
+    x-lg-handler: 'App\Http\Controllers\NotebookController@post'
+    tags:
+      - notebooks
+    summary: Create a new notebook
+    operationId: addNotebook
+    requestBody:
+      description: Create a new notebook
+      content:
+        application/json:
+          schema:
+            $ref: './notebooks.yaml#/CreateNotebookRequest'
+      required: true
+    responses:
+      '201':
+        description: Successful operation
+        content:
+          application/json:
+            schema:
+              $ref: './notebooks.yaml#/NotebookResponse'
+      "422":
+        $ref: './index.yaml#/components/responses/UnprocessableContent'
+
+
+Notebook:
+  get:
+    x-lg-handler: 'App\Http\Controllers\NotebookController@get'
+    tags:
+      - notebooks
+    summary: Get a notebook by ID
+    operationId: getNotebookById
+    parameters:
+      - name: id
+        in: path
+        description: ID of the notebook to return
+        required: true
+        schema:
+          type: integer
+    responses:
+      '200':
+        description: Successful operation
+        content:
+          application/json:
+            schema:
+              $ref: './notebooks.yaml#/NotebookResponse'
+      "404":
+        $ref: './index.yaml#/components/responses/NotFound'
+  patch:
+    x-lg-handler: 'App\Http\Controllers\NotebookController@patch'
+    tags:
+      - notebooks
+    summary: Update a notebook by ID
+    operationId: updateNotebookById
+    parameters:
+      - name: id
+        in: path
+        description: ID of the notebook to update
+        required: true
+        schema:
+          type: integer
+    requestBody:
+      description: Updated notebook data
+      content:
+        application/json:
+          schema:
+            $ref: './notebooks.yaml#/PatchNotebookRequest'
+      required: true
+    responses:
+      '200':
+        description: Successful operation
+        content:
+          application/json:
+            schema:
+              $ref: './notebooks.yaml#/NotebookResponse'
+      "404":
+        $ref: './index.yaml#/components/responses/NotFound'
+      "422":
+        $ref: './index.yaml#/components/responses/UnprocessableContent'
+  delete:
+    x-lg-handler: 'App\Http\Controllers\NotebookController@delete'
+    tags:
+      - notebooks
+    summary: Delete a notebook by ID
+    operationId: deleteNotebookById
+    parameters:
+      - name: id
+        in: path
+        description: ID of the notebook to delete
+        required: true
+        schema:
+          type: integer
+    responses:
+      '200':
+        description: Successful operation
+        content:
+          application/json:
+            schema:
+              $ref: './notebooks.yaml#/NotebookResponse'
+        "404":
+          $ref: './index.yaml#/components/responses/NotFound'
+

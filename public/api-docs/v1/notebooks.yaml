@@ -1,0 +1,76 @@
+NotebookReadonlyProperties:
+  type: object
+  properties:
+    id:
+      type: integer
+      example: 1
+    created_at:
+      format: date-time
+      type: string
+      example: "2023-01-29T12:36:13.000000Z"
+    updated_at:
+      format: date-time
+      type: string
+      example: "2023-01-29T12:36:13.000000Z"
+  required:
+    - id
+    - created_at
+    - updated_at
+
+NotebookFillableProperties:
+  type: object
+  properties:
+    full_name:
+      type: string
+      example: "Sharifullina Viktoria Vadimovna"
+    company:
+      type: string
+      example: "Future Company"
+    phone:
+      type: string
+      example: "79105845061"
+    email:
+      type: string
+      example: "viktoria@gmail.com"
+    birth_date:
+      type: date
+      example: "2002-01-28"
+    photo:
+      type: string
+      example: "path_to_photo"
+
+NotebookFillableRequiredProperties:
+  required:
+    - full_name
+    - company
+    - phone
+    - email
+    - birth_date
+    - photo
+
+Notebook:
+  allOf:
+    - $ref: '#/NotebookReadonlyProperties'
+    - $ref: '#/NotebookFillableProperties'
+    - $ref: '#/NotebookFillableRequiredProperties'
+
+CreateNotebookRequest:
+  allOf:
+    - $ref: '#/NotebookFillableProperties'
+    - $ref: '#/NotebookFillableRequiredProperties'
+
+PatchNotebookRequest:
+  allOf:
+    - $ref: '#/NotebookFillableProperties'
+
+NotebookResponse:
+  type: object
+  properties:
+    data:
+      $ref: '#/Notebook'
+    meta:
+      type: object
+  required:
+    - data
+
+

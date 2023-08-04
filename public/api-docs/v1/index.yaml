@@ -1,0 +1,57 @@
+openapi: 3.0.3
+info:
+  title: Notebooks - OpenAPI 3.0
+  version: 1.0.0
+  description: API documentation for Notebooks
+servers:
+  - url: /api/v1/
+tags:
+  - name: notebooks
+paths:
+  /notebook:
+    $ref: './paths.yaml#/Notebooks'
+  /notebook/{id}:
+    $ref: './paths.yaml#/Notebook'
+
+components:
+  parameters:
+    QueryInclude:
+      $ref: './common_parameters.yaml#/QueryInclude'
+    PathId:
+      $ref: './common_parameters.yaml#/PathId'
+  schemas:
+    EmptyDataResponse:
+      type: object
+      properties:
+        data:
+          type: object
+          nullable: true
+        meta:
+          type: object
+      required:
+        - data
+  responses:
+    BadRequest:
+      description: Bad Request
+      content:
+        application/json:
+          schema:
+            $ref: './errors.yaml#/ErrorResponse'
+    NotFound:
+      description: Not Found
+      content:
+        application/json:
+          schema:
+            $ref: './errors.yaml#/ErrorResponse'
+    ServerError:
+      description: Internal Server Error
+      content:
+        application/json:
+          schema:
+            $ref: './errors.yaml#/ErrorResponse'
+    UnprocessableContent:
+      description: Error of validation
+      content:
+        application/json:
+          schema:
+            $ref: './errors.yaml#/ErrorResponse'
